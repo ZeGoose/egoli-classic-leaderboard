@@ -286,26 +286,20 @@ let isAdmin=false;
 const RC={};
 let cachedMatches=null;
 
-// ── Storage API via Claude ──
-async function apiCall(prompt){
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
-    });
-    const d=await res.json();
-    return d.content?.[0]?.text||'';
-  }catch(e){return '';}
-}
+// ── Storage via JSONBin.io (free, shared, real-time) ──
+// JSONBin config - free tier, no account needed to read
+const JSONBIN_BIN_ID = '6a0c0d386610dd3ae86b7cc0';
+const JSONBIN_API_KEY = 'ZtTX9/xfmzSjYQtmViXdteMiflgOy7GDwU0EbjE23bdhc9CQLmiiq';
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
 async function loadMatches(){
   try{
-    const result=await window.storage.get('egoli_matches_v6');
-    if(result&&result.value){
-      return JSON.parse(result.value);
-    }
-  }catch(e){}
+    const res=await fetch(JSONBIN_URL+'/latest',{
+      headers:{'X-Master-Key':JSONBIN_API_KEY,'X-Bin-Meta':'false'}
+    });
+    const data=await res.json();
+    if(data&&data.matches) return data.matches;
+  }catch(e){console.error('Load failed',e);}
   // First load — seed data
   const matches=JSON.parse(JSON.stringify(SEED_MATCHES));
   await saveMatches(matches);
@@ -314,13 +308,16 @@ async function loadMatches(){
 
 async function saveMatches(matches){
   try{
-    await window.storage.set('egoli_matches_v6',JSON.stringify(matches),true);
+    await fetch(JSONBIN_URL,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
+      body:JSON.stringify({matches})
+    });
     cachedMatches=matches;
   }catch(e){console.error('Save failed',e);}
 }
 
 async function getMatches(){
-  if(cachedMatches)return cachedMatches;
   cachedMatches=await loadMatches();
   return cachedMatches;
 }
