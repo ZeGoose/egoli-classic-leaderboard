@@ -466,7 +466,11 @@ async function renderRes(){
     const {ca,cb,pa,pb}=matchScore(m);
     const rt=Object.entries(m.rumblers||{}).filter(([,v])=>v>0).map(([p,v])=>`<span class="tag t-rum">🥃 ${p}${v>1?' x'+v:''}</span>`).join('');
     return`<div class="res-card">
-      <div class="res-hd"><span class="res-date">${fd(m.date)}</span><span class="res-round">${m.round||'Match'}</span></div>
+      <div class="res-hd">
+        <span class="res-date">${fd(m.date)}</span>
+        <span class="res-round">${m.round||'Match'}</span>
+        ${isAdmin&&currentClub===null?`<button onclick="deleteResult('${m.id}')" style="background:rgba(248,215,218,.3);border:none;border-radius:6px;color:#f87171;font-size:11px;font-weight:700;padding:3px 8px;cursor:pointer">🗑️ Delete</button>`:''}
+      </div>
       <div class="res-body">
         <div class="g-row">
           <div class="g-a">${sn(ca)}</div>
@@ -705,6 +709,17 @@ async function clearAll(){
   await render();
   renderPending();
   toast('🔄 Reset');
+}
+
+async function deleteResult(id){
+  if(!confirm('Delete this approved result? This will affect the leaderboard.'))return;
+  const matches=await getMatches();
+  const idx=matches.findIndex(x=>x.id===id);
+  if(idx>-1)matches.splice(idx,1);
+  await saveMatches(matches);
+  cachedMatches=null;
+  await render();
+  toast('🗑️ Result deleted');
 }
 
 function fd(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'});}catch{return d;}}
