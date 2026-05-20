@@ -292,20 +292,27 @@ const RC={};
 let cachedMatches=null;
 
 // ── Storage via JSONBin.io (free, shared, real-time) ──
-// JSONBin config - free tier, no account needed to read
-const JSONBIN_BIN_ID = '6a0c0d386610dd3ae86b7cc0';
-const JSONBIN_API_KEY = 'ZtTX9/xfmzSjYQtmViXdteMiflgOy7GDwU0EbjE23bdhc9CQLmiiq';
-const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+const FB_URL = 'https://egoli-classic-default-rtdb.europe-west1.firebasedatabase.app/matches.json';
 
 async function loadMatches(){
   try{
-    const res=await fetch(JSONBIN_URL+'/latest',{
-      headers:{'X-Master-Key':JSONBIN_API_KEY,'X-Bin-Meta':'false'}
-    });
+    const res=await fetch(FB_URL);
+    if(!res.ok){toast('⚠️ DB load error: '+res.status);return getSeedAndSave();}
     const data=await res.json();
-    if(data&&data.matches) return data.matches;
-  }catch(e){console.error('Load failed',e);}
-  // First load — seed data
+    if(data===null||data===undefined){return getSeedAndSave();}
+    if(Array.isArray(data)&&data.length>0) return data;
+    if(typeof data==='object'&&!Array.isArray(data)){
+      const arr=Object.values(data);
+      if(arr.length>0) return arr;
+    }
+    return getSeedAndSave();
+  }catch(e){
+    toast('⚠️ Cannot reach database: '+e.message);
+    return JSON.parse(JSON.stringify(SEED_MATCHES));
+  }
+}
+
+async function getSeedAndSave(){
   const matches=JSON.parse(JSON.stringify(SEED_MATCHES));
   await saveMatches(matches);
   return matches;
@@ -313,13 +320,20 @@ async function loadMatches(){
 
 async function saveMatches(matches){
   try{
-    await fetch(JSONBIN_URL,{
+    const res=await fetch(FB_URL,{
       method:'PUT',
-      headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
-      body:JSON.stringify({matches})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(matches)
     });
+    if(!res.ok){
+      const txt=await res.text();
+      toast('⚠️ Save error '+res.status+': '+txt.substring(0,60));
+      return;
+    }
     cachedMatches=matches;
-  }catch(e){console.error('Save failed',e);}
+  }catch(e){
+    toast('⚠️ Save failed: '+e.message);
+  }
 }
 
 async function getMatches(){
