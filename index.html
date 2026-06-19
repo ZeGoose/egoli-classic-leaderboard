@@ -728,7 +728,8 @@ const SEED_MATCHES=[
   {id:'seed2',date:'2026-02-22',round:'Match 2',g1a:'The River Club Raiders',g1b:'Weapons',g1r:'a',g2a:'The River Club Raiders',g2b:'Weapons',g2r:'a',bonus:'',rumblers:{'Charter':1},submitter:'The River Club Raiders',status:'approved'},
   {id:'seed3',date:'2026-04-12',round:'Match 3',g1a:'Weapons',g1b:'The Parkview Pitbulls',g1r:'a',g2a:'Weapons',g2b:'The Parkview Pitbulls',g2r:'b',bonus:'Weapons',rumblers:{'Ryan':1,'Karlo':1,'Luca Cioffi':2},submitter:'Weapons',status:'approved'},
   {id:'seed4',date:'2026-04-18',round:'Match 4',g1a:'The River Club Raiders',g1b:'The Parkview Pitbulls',g1r:'a',g2a:'The River Club Raiders',g2b:'The Parkview Pitbulls',g2r:'a',bonus:'',rumblers:{},submitter:'The River Club Raiders',status:'approved'},
-  {id:'seed5',date:'2026-06-07',round:'Match 5',g1a:'GNU',g1b:'The Blue Collar Boys',g1r:'a',g2a:'GNU',g2b:'The Blue Collar Boys',g2r:'a',bonus:'',rumblers:{},submitter:'GNU',status:'approved'}
+  {id:'seed5',date:'2026-06-07',round:'Match 5',g1a:'GNU',g1b:'The Blue Collar Boys',g1r:'a',g2a:'GNU',g2b:'The Blue Collar Boys',g2r:'a',bonus:'',rumblers:{},submitter:'GNU',status:'approved'},
+  {id:'seed6',date:'2026-05-16',round:'Match 6',g1a:'Wanderers 2nd',g1b:'GNU',g1r:'a',g2a:'Wanderers 2nd',g2b:'GNU',g2r:'a',bonus:'',rumblers:{},submitter:'Wanderers 2nd',status:'approved'}
 ];
 
 // ── State ──
@@ -740,27 +741,26 @@ let cachedMatches=null;
 const FB_URL = 'https://egoli-classic-default-rtdb.europe-west1.firebasedatabase.app/matches.json';
 
 async function loadMatches(){
+  // Always start with seed matches as guaranteed baseline
+  const seed = JSON.parse(JSON.stringify(SEED_MATCHES));
+  const seedIds = new Set(seed.map(m=>m.id));
   try{
     const res=await fetch(FB_URL);
-    if(!res.ok){toast('⚠️ DB load error: '+res.status);return getSeedAndSave();}
+    if(!res.ok){ return seed; }
     const data=await res.json();
-    if(data===null||data===undefined){return getSeedAndSave();}
-    if(Array.isArray(data)&&data.length>0) return data;
-    if(typeof data==='object'&&!Array.isArray(data)){
-      const arr=Object.values(data);
-      if(arr.length>0) return arr;
-    }
-    return getSeedAndSave();
+    let fbMatches=[];
+    if(Array.isArray(data)&&data.length>0) fbMatches=data;
+    else if(data&&typeof data==='object'&&!Array.isArray(data)) fbMatches=Object.values(data);
+    // Merge: keep seed matches + any extra matches from Firebase not in seed
+    const extra = fbMatches.filter(m=>m&&m.id&&!seedIds.has(m.id));
+    // Also pick up any seed matches that were modified in Firebase (e.g. status changes)
+    const fbById = {};
+    fbMatches.forEach(m=>{ if(m&&m.id) fbById[m.id]=m; });
+    const merged = seed.map(m=>fbById[m.id]||m).concat(extra);
+    return merged;
   }catch(e){
-    toast('⚠️ Cannot reach database: '+e.message);
-    return JSON.parse(JSON.stringify(SEED_MATCHES));
+    return seed;
   }
-}
-
-async function getSeedAndSave(){
-  const matches=JSON.parse(JSON.stringify(SEED_MATCHES));
-  await saveMatches(matches);
-  return matches;
 }
 
 async function saveMatches(matches){
