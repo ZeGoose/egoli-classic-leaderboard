@@ -4,134 +4,538 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>⛳ Egoli Classic 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
 <style>
-:root{
-  --bg:#0e2318;--green-dark:#1a3a2a;--green-mid:#2d5a3d;--green:#3d7a52;
-  --gold:#c9a84c;--gold-light:#e8c96d;--cream:#f5f0e8;--cream-dark:#ede6d6;
-  --rum:#8b2e0f;--text-dark:#1a1a1a;--text-mid:#444;--text-light:#888;
-  --shadow:0 4px 24px rgba(0,0,0,0.18);--r:16px;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Augusta palette */
+  --augusta-green: #1B4332;
+  --augusta-mid:   #2D6A4F;
+  --augusta-light: #40916C;
+  --cream:         #F8F3E8;
+  --cream-dark:    #EDE4D0;
+  --parchment:     #FAF7F0;
+  /* Jacaranda accent */
+  --jac:           #7B4FA6;
+  --jac-light:     #A87CC9;
+  --jac-pale:      #EFE4F8;
+  /* Gold */
+  --gold:          #C49A3C;
+  --gold-light:    #E2BF6A;
+  /* Text */
+  --text-dark:     #1C1C1C;
+  --text-mid:      #4A4A4A;
+  --text-light:    #8A8A8A;
+  /* Rum */
+  --rum:           #8B2E0F;
+  --shadow-sm:     0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:     0 6px 24px rgba(0,0,0,0.12);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.18);
+  --r:             14px;
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text-dark);min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 15%,rgba(61,122,82,.25) 0,transparent 55%),radial-gradient(circle at 85% 85%,rgba(201,168,76,.12) 0,transparent 55%);pointer-events:none;z-index:0}
-.wrap{max-width:680px;margin:0 auto;padding:0 0 60px;position:relative;z-index:1}
 
-header{background:linear-gradient(160deg,#1e4530 0%,#0e2318 100%);padding:24px 16px 20px;text-align:center;border-bottom:3px solid var(--gold);position:relative;overflow:hidden}
-header::after{content:'⛳';position:absolute;font-size:100px;opacity:.05;right:-5px;top:-5px;pointer-events:none}
-.logo-wrap{display:flex;justify-content:center;margin-bottom:8px}
-.logo-wrap img{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5))}
-.tagline{color:rgba(245,240,232,.5);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
-.stats-row{display:flex;justify-content:center;gap:28px}
-.stat .v{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);font-weight:700;text-align:center}
-.stat .l{font-size:10px;color:rgba(245,240,232,.4);text-transform:uppercase;letter-spacing:1px;text-align:center}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--augusta-green);
+  color: var(--text-dark);
+  min-height: 100vh;
+  position: relative;
+}
 
-.tabs{display:flex;background:#0e2318;padding:10px 14px 0;gap:4px;border-bottom:2px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:100}
-.tab{flex:1;padding:10px 2px;background:none;border:none;border-bottom:3px solid transparent;color:rgba(245,240,232,.35);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;cursor:pointer;transition:all .2s;margin-bottom:-2px}
-.tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+/* Jacaranda petal background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 20%, rgba(123,79,166,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, rgba(123,79,166,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% 50%, rgba(27,67,50,0.95) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-.panel{display:none;padding:18px 14px}.panel.on{display:block}
-.sec-title{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(245,240,232,.3);margin-bottom:12px;padding:0 2px}
+/* Subtle jacaranda petal pattern */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 3px 5px at 15% 25%, rgba(168,124,201,0.25) 0%, transparent 100%),
+    radial-gradient(ellipse 4px 6px at 35% 15%, rgba(168,124,201,0.2) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 5px at 75% 30%, rgba(168,124,201,0.22) 0%, transparent 100%),
+    radial-gradient(ellipse 5px 4px at 85% 60%, rgba(168,124,201,0.18) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 6px at 55% 75%, rgba(168,124,201,0.2) 0%, transparent 100%),
+    radial-gradient(ellipse 4px 5px at 25% 80%, rgba(168,124,201,0.15) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 5px at 65% 10%, rgba(168,124,201,0.2) 0%, transparent 100%),
+    radial-gradient(ellipse 6px 4px at 90% 20%, rgba(168,124,201,0.18) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+  animation: petalDrift 20s ease-in-out infinite alternate;
+}
 
-/* LEADERBOARD */
-.lb{display:flex;flex-direction:column;gap:10px}
-.lb-row{background:var(--cream);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
-.lb-row.r1{background:linear-gradient(135deg,#fffbe6,#f5e9c0);border:2px solid var(--gold)}
-.lb-row.r2{background:linear-gradient(135deg,#f0f0f0,#e0e0e0);border:2px solid #aaa}
-.lb-row.r3{background:linear-gradient(135deg,#fdf0e8,#f0d8c0);border:2px solid #c07840}
-.rank{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.r1 .rank{background:var(--gold);color:var(--green-dark);font-size:16px}
-.r2 .rank{background:#aaa;color:#fff}.r3 .rank{background:#c07840;color:#fff}
-.rN .rank{background:var(--green-mid);color:var(--cream);font-size:12px}
-.cn{font-weight:700;font-size:15px;color:var(--text-dark);flex:1}
-.lb-stats{display:flex;gap:8px;flex-shrink:0}
-.ls-item{display:flex;flex-direction:column;align-items:center;min-width:28px;background:rgba(0,0,0,.06);border-radius:8px;padding:4px 6px}
-.ls-val{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:var(--text-dark);line-height:1}
-.ls-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);margin-top:1px}
-.lw .ls-val{color:#1a5c2a}.ld .ls-val{color:#7a5c00}.ll .ls-val{color:#7a1a1a}
-.pts-box{text-align:right;flex-shrink:0;display:flex;align-items:baseline;gap:4px}
-.pts-n{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--green-mid);line-height:1}
-.r1 .pts-n{color:var(--gold)}
-.pts-l{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);font-weight:600}
+@keyframes petalDrift {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(8px) rotate(1deg); }
+}
 
-/* RESULTS */
-.res-list{display:flex;flex-direction:column;gap:12px}
-.res-card{background:var(--cream);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
-.res-hd{background:var(--green-mid);padding:10px 15px;display:flex;justify-content:space-between;align-items:center}
-.res-date{color:rgba(245,240,232,.65);font-size:12px}
-.res-round{color:var(--gold);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
-.res-body{padding:14px 15px}
-.g-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
-.g-a{text-align:right;font-weight:700;font-size:14px}.g-b{text-align:left;font-weight:700;font-size:14px}
-.g-score{background:var(--green-dark);color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:18px;padding:6px 14px;border-radius:8px;text-align:center;white-space:nowrap}
-.bonus-note{text-align:center;font-size:11px;color:var(--green);font-weight:700;margin-top:8px}
-.res-extra{border-top:1px solid var(--cream-dark);padding:8px 15px;display:flex;gap:6px;flex-wrap:wrap}
-.tag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px}
-.t-rum{background:#f9ddd4;color:var(--rum)}
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 0 60px; position: relative; z-index: 1; }
 
-/* RUMBLERS */
-.rum-lb{display:flex;flex-direction:column;gap:8px}
-.rum-row{background:var(--cream);border-radius:12px;padding:12px 15px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
-.rum-rk{width:30px;height:30px;border-radius:50%;background:var(--rum);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.rum-info{flex:1}.rum-pn{font-weight:700;font-size:14px}.rum-cn{font-size:11px;color:var(--text-light);margin-top:2px}
-.rum-count{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--rum)}
-.rum-sub{font-size:10px;color:var(--text-light);text-align:right}
+/* ── HEADER ── */
+header {
+  background: linear-gradient(175deg, #0D2B1E 0%, #1B4332 50%, #0D2B1E 100%);
+  padding: 28px 20px 24px;
+  text-align: center;
+  border-bottom: 1px solid rgba(196,154,60,0.4);
+  position: relative;
+  overflow: hidden;
+}
 
-/* ADMIN */
-.admin-gate{display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:16px}
-.admin-gate .lock{font-size:48px}
-.admin-gate h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);text-align:center}
-.admin-gate p{color:rgba(245,240,232,.5);font-size:13px;text-align:center}
-.pw-row{display:flex;gap:8px;width:100%;max-width:320px}
-.pw-row input{flex:1;padding:12px 14px;border:2px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.08);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:15px;outline:none}
-.pw-row input::placeholder{color:rgba(245,240,232,.3)}
-.pw-row input:focus{border-color:var(--gold)}
-.btn-gold{padding:12px 20px;background:var(--gold);color:var(--green-dark);border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer}
-.pw-err{color:#f87171;font-size:13px;font-weight:600}
+/* Augusta-style pin stripe border */
+header::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--jac), var(--gold), transparent);
+}
 
-.a-sec{background:var(--cream);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
-.a-sec h3{font-family:'Playfair Display',serif;font-size:17px;color:var(--green-dark);margin-bottom:13px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
-.fg{margin-bottom:11px}
-.fg label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-mid);margin-bottom:4px}
-.fg input,.fg select{width:100%;padding:10px 12px;border:2px solid var(--cream-dark);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);background:#fff;outline:none;transition:border-color .2s}
-.fg input:focus,.fg select:focus{border-color:var(--green)}
-.gi{background:var(--cream-dark);border-radius:12px;padding:13px;margin-bottom:11px}
-.gi h4{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-mid);font-weight:700;margin-bottom:10px}
-.sc-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:8px}
-.sc-div{text-align:center;font-weight:700;color:var(--text-light);font-size:13px}
-.btn{display:block;width:100%;padding:13px;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
-.btn-p{background:var(--green-mid);color:var(--cream)}.btn-p:active{background:var(--green)}
-.btn-d{background:#f8d7da;color:#7a1a1a;font-size:13px;padding:10px;margin-top:8px}
-.rum-pl-list{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto}
-.rum-pl-row{display:flex;align-items:center;justify-content:space-between;background:#fff;border:2px solid var(--cream-dark);border-radius:10px;padding:8px 12px}
-.rpl-name{font-weight:700;font-size:13px}.rpl-club{font-size:11px;color:var(--text-light)}
-.stepper{display:flex;align-items:center;gap:8px}
-.stepper button{width:28px;height:28px;border-radius:50%;border:none;background:var(--green-mid);color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
-.stepper span{font-weight:700;font-size:15px;min-width:18px;text-align:center;color:var(--rum)}
-.ph{color:var(--text-light);font-size:13px;padding:8px 0}
-.signout-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:10px 14px;background:rgba(201,168,76,.1);border-radius:12px;border:1px solid rgba(201,168,76,.3)}
-.signout-bar span{color:var(--gold);font-size:13px;font-weight:600}
-.btn-sm{padding:7px 14px;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,.1);color:var(--cream)}
+.logo-wrap { display: flex; justify-content: center; margin-bottom: 10px; }
+.logo-wrap img { width: 110px; height: 110px; object-fit: contain; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.6)); }
 
-/* PENDING */
-.pending-card{background:var(--cream);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);margin-bottom:12px}
-.pending-hd{background:#7a5c00;padding:10px 15px;display:flex;justify-content:space-between;align-items:center}
-.pending-hd span{color:#fff3cd;font-size:12px;font-weight:700}
-.pending-body{padding:14px 15px}
-.pending-match{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin-bottom:10px}
-.pm-a{text-align:right;font-weight:700;font-size:14px}.pm-b{text-align:left;font-weight:700;font-size:14px}
-.pm-score{background:var(--green-dark);color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:18px;padding:6px 14px;border-radius:8px;text-align:center}
-.pending-meta{font-size:12px;color:var(--text-light);text-align:center;margin-bottom:12px}
-.pending-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn-approve{background:#d4edda;color:#1a5c2a;border:none;border-radius:10px;padding:11px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
-.btn-reject{background:#f8d7da;color:#7a1a1a;border:none;border-radius:10px;padding:11px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
-.pending-warn{font-size:11px;color:#7a5c00;background:#fff3cd;border-radius:8px;padding:8px 10px;margin-bottom:10px;font-weight:600}
+.tagline {
+  color: var(--jac-light);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
 
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#0e2318;color:var(--gold);padding:11px 22px;border-radius:30px;font-weight:700;font-size:14px;border:2px solid var(--gold);z-index:999;transition:transform .3s;white-space:nowrap}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.empty{text-align:center;padding:40px 20px;color:rgba(245,240,232,.35);font-size:14px}
-.empty .ei{font-size:40px;margin-bottom:10px}
-.loading{text-align:center;padding:30px;color:rgba(245,240,232,.4);font-size:13px}
+.stats-row { display: flex; justify-content: center; gap: 0; }
+.stat {
+  padding: 0 20px;
+  border-right: 1px solid rgba(196,154,60,0.2);
+}
+.stat:last-child { border-right: none; }
+.stat .v {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: var(--gold);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1;
+}
+.stat .l {
+  font-size: 9px;
+  color: rgba(248,243,232,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-top: 3px;
+}
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  background: #0D2B1E;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(196,154,60,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.tab {
+  flex: 1;
+  padding: 14px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: rgba(248,243,232,0.35);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -1px;
+}
+.tab.on { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── PANELS ── */
+.panel { display: none; padding: 16px 14px; }
+.panel.on { display: block; }
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: rgba(248,243,232,0.3);
+  margin-bottom: 14px;
+  padding: 0 2px;
+  font-style: italic;
+}
+
+/* ── LEADERBOARD ── */
+.lb { display: flex; flex-direction: column; gap: 8px; }
+
+.lb-row {
+  background: var(--parchment);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid transparent;
+  transition: transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Augusta fairway stripe */
+.lb-row::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; right: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent, rgba(27,67,50,0.08), transparent);
+}
+
+.lb-row.r1 { background: linear-gradient(135deg, #FFFBEF, #FFF3D0); border-left-color: var(--gold); }
+.lb-row.r2 { background: linear-gradient(135deg, #F8F8F8, #EFEFEF); border-left-color: #AAAAAA; }
+.lb-row.r3 { background: linear-gradient(135deg, #FFF8F2, #FDEEDD); border-left-color: #C07840; }
+.lb-row.rN { border-left-color: var(--augusta-light); }
+
+.rank {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px;
+  flex-shrink: 0;
+  font-family: 'Cormorant Garamond', serif;
+}
+.r1 .rank { background: var(--gold); color: white; font-size: 17px; }
+.r2 .rank { background: #AAAAAA; color: white; }
+.r3 .rank { background: #C07840; color: white; }
+.rN .rank { background: var(--augusta-green); color: var(--cream); font-size: 13px; }
+
+.cn {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text-dark);
+  flex: 1;
+  letter-spacing: 0.3px;
+}
+
+.lb-stats { display: flex; gap: 6px; flex-shrink: 0; }
+.ls-item {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 30px;
+  background: rgba(27,67,50,0.06);
+  border-radius: 8px;
+  padding: 4px 6px;
+}
+.ls-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--text-dark); line-height: 1;
+}
+.ls-lbl { font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-top: 2px; }
+.lw .ls-val { color: var(--augusta-mid); }
+.ld .ls-val { color: var(--jac); }
+.ll .ls-val { color: var(--rum); }
+
+.pts-box { text-align: right; flex-shrink: 0; }
+.pts-n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px; font-weight: 700;
+  color: var(--augusta-green); line-height: 1;
+}
+.r1 .pts-n { color: var(--gold); }
+.pts-l { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); font-weight: 500; }
+
+/* ── RESULTS ── */
+.res-list { display: flex; flex-direction: column; gap: 10px; }
+
+.res-card {
+  background: var(--parchment);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--cream-dark);
+}
+
+.res-hd {
+  background: linear-gradient(135deg, var(--augusta-green), var(--augusta-mid));
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(196,154,60,0.3);
+}
+.res-date { color: rgba(248,243,232,0.6); font-size: 11px; font-weight: 500; }
+.res-round { color: var(--gold-light); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+
+.res-body { padding: 16px 14px; }
+.g-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.g-a { text-align: right; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 16px; color: var(--text-dark); }
+.g-b { text-align: left; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 16px; color: var(--text-dark); }
+.g-score {
+  background: var(--augusta-green);
+  color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700; font-size: 20px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  text-align: center; white-space: nowrap;
+  border: 1px solid rgba(196,154,60,0.3);
+}
+.bonus-note { text-align: center; font-size: 11px; color: var(--augusta-mid); font-weight: 600; margin-top: 8px; }
+
+.res-extra {
+  border-top: 1px solid var(--cream-dark);
+  padding: 8px 14px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; }
+.t-rum { background: #f9ddd4; color: var(--rum); }
+
+/* ── RUMBLERS ── */
+.rum-lb { display: flex; flex-direction: column; gap: 8px; }
+.rum-row {
+  background: var(--parchment);
+  border-radius: var(--r);
+  padding: 12px 15px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--cream-dark);
+  border-left: 4px solid var(--rum);
+}
+.rum-rk {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--rum);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.rum-info { flex: 1; }
+.rum-pn { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 16px; }
+.rum-cn { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+.rum-count { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--rum); }
+.rum-sub { font-size: 10px; color: var(--text-light); text-align: right; }
+
+/* ── ADMIN GATE ── */
+.admin-gate {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 48px 20px; gap: 16px;
+}
+.admin-gate .lock { font-size: 48px; }
+.admin-gate h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 700;
+  color: var(--cream); text-align: center;
+  font-style: italic;
+}
+.admin-gate p { color: rgba(248,243,232,0.5); font-size: 13px; text-align: center; }
+
+.pw-row { display: flex; gap: 8px; width: 100%; max-width: 320px; }
+.pw-row input {
+  flex: 1; padding: 12px 14px;
+  border: 1px solid rgba(196,154,60,0.3);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.07);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px; outline: none;
+  transition: border-color 0.2s;
+}
+.pw-row input::placeholder { color: rgba(248,243,232,0.25); }
+.pw-row input:focus { border-color: var(--gold); }
+.btn-gold {
+  padding: 12px 20px;
+  background: var(--gold);
+  color: var(--augusta-green);
+  border: none; border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.pw-err { color: #f87171; font-size: 13px; font-weight: 600; }
+
+/* ── ADMIN PANEL ── */
+.a-sec {
+  background: var(--parchment);
+  border-radius: var(--r);
+  padding: 18px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 12px;
+  border: 1px solid var(--cream-dark);
+}
+.a-sec h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px; font-weight: 700;
+  color: var(--augusta-green);
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--cream-dark);
+  font-style: italic;
+}
+.fg { margin-bottom: 11px; }
+.fg label {
+  display: block; font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-light); margin-bottom: 4px;
+}
+.fg input, .fg select {
+  width: 100%; padding: 10px 12px;
+  border: 1px solid var(--cream-dark);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; color: var(--text-dark);
+  background: white; outline: none;
+  transition: border-color 0.2s;
+}
+.fg input:focus, .fg select:focus { border-color: var(--augusta-mid); }
+
+.gi {
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 13px; margin-bottom: 11px;
+  border: 1px solid var(--cream-dark);
+}
+.gi h4 {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1.2px; color: var(--text-light);
+  font-weight: 700; margin-bottom: 10px;
+}
+.sc-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; margin-bottom: 8px; }
+.sc-div { text-align: center; font-weight: 700; color: var(--text-light); font-size: 13px; }
+
+.btn {
+  display: block; width: 100%; padding: 13px;
+  border: none; border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.btn-p { background: var(--augusta-green); color: var(--cream); }
+.btn-p:active { background: var(--augusta-mid); }
+.btn-d { background: #f8d7da; color: #7a1a1a; font-size: 13px; padding: 10px; margin-top: 8px; }
+
+.rum-pl-list { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
+.rum-pl-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: white; border: 1px solid var(--cream-dark);
+  border-radius: 8px; padding: 8px 12px;
+}
+.rpl-name { font-weight: 600; font-size: 13px; }
+.rpl-club { font-size: 11px; color: var(--text-light); }
+.stepper { display: flex; align-items: center; gap: 8px; }
+.stepper button {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: none; background: var(--augusta-green);
+  color: white; font-size: 18px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.stepper span { font-weight: 700; font-size: 15px; min-width: 18px; text-align: center; color: var(--rum); }
+.ph { color: var(--text-light); font-size: 13px; padding: 8px 0; }
+
+.signout-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px; padding: 10px 14px;
+  background: rgba(196,154,60,0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(196,154,60,0.25);
+}
+.signout-bar span { color: var(--gold); font-size: 13px; font-weight: 600; }
+.btn-sm {
+  padding: 6px 12px; border: none; border-radius: 6px;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+  cursor: pointer; background: rgba(255,255,255,0.1); color: var(--cream);
+}
+
+/* ── PENDING ── */
+.pending-card {
+  background: var(--parchment);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 10px;
+  border: 1px solid rgba(123,79,166,0.3);
+}
+.pending-hd {
+  background: linear-gradient(135deg, #4A2570, #7B4FA6);
+  padding: 10px 14px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.pending-hd span { color: rgba(255,255,255,0.85); font-size: 11px; font-weight: 600; }
+.pending-body { padding: 14px; }
+.pending-match { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; margin-bottom: 10px; }
+.pm-a { text-align: right; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 16px; }
+.pm-b { text-align: left; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 16px; }
+.pm-score {
+  background: var(--augusta-green); color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 20px;
+  padding: 6px 14px; border-radius: 8px; text-align: center;
+}
+.pending-meta { font-size: 11px; color: var(--text-light); text-align: center; margin-bottom: 12px; }
+.pending-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn-approve {
+  background: #d4edda; color: #1a5c2a;
+  border: none; border-radius: 8px; padding: 11px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.btn-reject {
+  background: #f8d7da; color: #7a1a1a;
+  border: none; border-radius: 8px; padding: 11px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.pending-warn {
+  font-size: 11px; color: #5a3e00;
+  background: #fff3cd; border-radius: 6px;
+  padding: 7px 10px; margin-bottom: 10px; font-weight: 600;
+}
+
+/* ── STATS ── */
+.stats-tab-btn{padding:6px 14px;border:1px solid var(--cream-dark);border-radius:20px;background:var(--parchment);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;color:var(--text-mid);transition:all .2s}
+.stats-tab-btn.on{background:var(--augusta-green);color:var(--cream);border-color:var(--augusta-green)}
+.player-stat-card{background:var(--parchment);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow-md);border:1px solid var(--cream-dark);margin-bottom:8px}
+.psc-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.psc-avatar{width:36px;height:36px;border-radius:50%;background:var(--augusta-green);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;flex-shrink:0}
+.psc-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--text-dark)}
+.psc-club{font-size:11px;color:var(--text-light)}
+.psc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.psc-stat{background:var(--cream);border-radius:8px;padding:8px;text-align:center}
+.psc-stat-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--augusta-green);line-height:1}
+.psc-stat-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-top:2px;font-weight:600}
+.psc-best{color:var(--gold)}.psc-worst{color:var(--rum)}
+.form-dot{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:9px;font-weight:700;color:white}
+.fd-w{background:var(--augusta-mid)}.fd-d{background:var(--jac)}.fd-l{background:var(--rum)}
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 22px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--augusta-green);
+  color: var(--gold);
+  padding: 11px 22px; border-radius: 30px;
+  font-weight: 700; font-size: 14px;
+  border: 1px solid rgba(196,154,60,0.4);
+  z-index: 999; transition: transform 0.3s; white-space: nowrap;
+  box-shadow: var(--shadow-lg);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+.empty { text-align: center; padding: 40px 20px; color: rgba(248,243,232,0.3); font-size: 14px; }
+.empty .ei { font-size: 40px; margin-bottom: 10px; }
+.loading { text-align: center; padding: 30px; color: rgba(248,243,232,0.35); font-size: 13px; font-style: italic; }
+
+/* Connection test */
+#fb-test-result { font-size: 13px; margin-top: 8px; padding: 10px; border-radius: 8px; display: none; }
 </style>
 </head>
 <body>
@@ -149,6 +553,7 @@ header::after{content:'⛳';position:absolute;font-size:100px;opacity:.05;right:
 <div class="tabs">
   <button class="tab on" onclick="showTab('lb',this)">🏆 Board</button>
   <button class="tab" onclick="showTab('res',this)">📋 Results</button>
+  <button class="tab" onclick="showTab('stats',this)">📊 Stats</button>
   <button class="tab" onclick="showTab('rum',this)">🥃 Shame</button>
   <button class="tab" onclick="showTab('admin',this)">⚙️ Admin</button>
 </div>
@@ -160,6 +565,11 @@ header::after{content:'⛳';position:absolute;font-size:100px;opacity:.05;right:
 <div id="tab-res" class="panel">
   <div class="sec-title">Match Results</div>
   <div class="res-list" id="res-list"><div class="loading">Loading results...</div></div>
+</div>
+<div id="tab-stats" class="panel">
+  <div class="sec-title">Player Statistics</div>
+  <div id="stats-format-tabs" style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap"></div>
+  <div id="stats-content"><div class="loading">Loading stats...</div></div>
 </div>
 <div id="tab-rum" class="panel">
   <div class="sec-title">🥃 Hall of Shame</div>
@@ -218,6 +628,28 @@ header::after{content:'⛳';position:absolute;font-size:100px;opacity:.05;right:
       <div class="gi">
         <h4>⭐ Bonus Point</h4>
         <div class="fg" style="margin-bottom:0"><label>Award to</label><select id="a-bonus"><option value="">— No bonus —</option></select></div>
+      </div>
+      <div class="gi">
+        <h4>📋 Scoring Format</h4>
+        <div class="fg" style="margin-bottom:0"><label>Format played today</label>
+          <select id="a-format">
+            <option value="">— Select format —</option>
+            <option value="stableford">Stableford</option>
+            <option value="matchplay">Match Play</option>
+            <option value="stroke">Stroke Play</option>
+          </select>
+        </div>
+      </div>
+      <div class="gi">
+        <h4>📸 Scorecard Photo (optional)</h4>
+        <p style="font-size:12px;color:var(--text-light);margin-bottom:10px">Upload a photo and Claude AI will read the scores automatically</p>
+        <input type="file" id="a-scorecard" accept="image/*" onchange="handleScorecardUpload()" style="display:none"/>
+        <button onclick="document.getElementById('a-scorecard').click()" class="btn btn-p" style="margin-bottom:10px">📷 Upload Scorecard Photo</button>
+        <div id="scorecard-preview" style="display:none">
+          <img id="scorecard-img" style="width:100%;border-radius:8px;margin-bottom:10px;border:2px solid var(--cream-dark)"/>
+          <div id="scorecard-reading" style="display:none;text-align:center;padding:10px;color:var(--text-light);font-size:13px;font-style:italic">🤖 Reading scorecard...</div>
+          <div id="scorecard-scores" style="display:none"></div>
+        </div>
       </div>
       <div class="gi">
         <h4>🥃 Rumblers</h4>
@@ -331,6 +763,9 @@ function showTab(n,b){
   document.getElementById('tab-'+n).classList.add('on');
   b.classList.add('on');
   if(n==='admin'&&isAdmin)renderPending();
+  if(n==='res')renderRes();
+  if(n==='rum')renderRum();
+  if(n==='stats')renderStats();
 }
 
 // ── Auth ──
@@ -429,6 +864,7 @@ function matchScore(m){
 }
 
 // ── Render LB ──
+let prevRankings = {};
 async function renderLB(){
   const matches=await getMatches();
   const s=calcStandings(matches);
@@ -439,9 +875,25 @@ async function renderLB(){
   document.getElementById('lb-list').innerHTML=s.map((t,i)=>{
     const r=i+1,rc=r<=3?'r'+r:'rN';
     const medal=r===1?'🥇':r===2?'🥈':r===3?'🥉':r;
+    // Position change arrow
+    const prev=prevRankings[t.name];
+    let arrow='';
+    if(prev!==undefined&&prev!==r){
+      arrow=prev>r
+        ?`<span style="color:#40916C;font-size:11px;font-weight:700">▲${prev-r}</span>`
+        :`<span style="color:var(--rum);font-size:11px;font-weight:700">▼${r-prev}</span>`;
+    }
+    // Form dots
+    const form=getFormDots(t.name,matches);
     return`<div class="lb-row ${rc}">
       <div class="rank">${medal}</div>
-      <div class="cn">${t.name}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="cn" style="flex:none">${t.name}</span>
+          ${arrow}
+        </div>
+        ${form}
+      </div>
       <div class="lb-stats">
         <span class="ls-item"><span class="ls-val">${t.mp}</span><span class="ls-lbl">P</span></span>
         <span class="ls-item lw"><span class="ls-val">${t.mw}</span><span class="ls-lbl">W</span></span>
@@ -454,6 +906,8 @@ async function renderLB(){
       </div>
     </div>`;
   }).join('');
+  // Store rankings for next render
+  s.forEach((t,i)=>prevRankings[t.name]=i+1);
 }
 
 // ── Render Results ──
@@ -555,6 +1009,7 @@ async function approveMatch(id){
   cachedMatches=null;
   await render();
   renderPending();
+  fireConfetti();
   toast('✅ Result approved and live!');
 }
 
@@ -611,12 +1066,21 @@ async function submitMatch(){
   const involvedClubs=[...new Set([g1a,g1b,g2a,g2b])];
   if(!involvedClubs.includes(submitter)){toast('⚠️ Your club must be in the match');return;}
 
+  // Collect player scores from scorecard reader
+  const playerScores={};
+  document.querySelectorAll('.score-input').forEach(inp=>{
+    const val=inp.value.trim();
+    if(val&&inp.dataset.player) playerScores[inp.dataset.player]={score:val,format:document.getElementById('a-format').value};
+  });
+
   const match={
     id:'m_'+Date.now(),
     date:document.getElementById('a-date').value,
     round:document.getElementById('a-round').value,
     g1a,g1b,g1r,g2a,g2b,g2r,
     bonus:document.getElementById('a-bonus').value,
+    format:document.getElementById('a-format').value||'unknown',
+    playerScores,
     rumblers:{...RC},
     submitter,
     status:'pending'
@@ -711,6 +1175,186 @@ async function clearAll(){
   toast('🔄 Reset');
 }
 
+// ── Scorecard Upload & AI Reader ──
+let scorecardBase64 = null;
+
+async function handleScorecardUpload(){
+  const file = document.getElementById('a-scorecard').files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    scorecardBase64 = e.target.result.split(',')[1];
+    const preview = document.getElementById('scorecard-preview');
+    const img = document.getElementById('scorecard-img');
+    preview.style.display = 'block';
+    img.src = e.target.result;
+    // Get clubs in this match
+    const clubs = [...new Set(['g1a','g1b','g2a','g2b'].map(id=>document.getElementById(id)?.value).filter(Boolean))];
+    const players = [];
+    CLUBS.forEach(c=>{ if(clubs.includes(c.name)) c.players.forEach(p=>players.push({name:p,club:c.name})); });
+    if(!players.length){ toast('⚠️ Select clubs first'); return; }
+    const format = document.getElementById('a-format').value || 'any format';
+    // Show reading indicator
+    document.getElementById('scorecard-reading').style.display = 'block';
+    document.getElementById('scorecard-scores').style.display = 'none';
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'image', source: { type: 'base64', media_type: file.type, data: scorecardBase64 }},
+              { type: 'text', text: `This is a golf scorecard. The players in this match are: ${players.map(p=>p.name).join(', ')}. The format is ${format}. Please extract each player's score from the scorecard. Return ONLY a JSON array like this, no other text: [{"player":"Name","score":"72"},{"player":"Name","score":"34 pts"}]. If you cannot read a score clearly, use null for that player's score.` }
+            ]
+          }]
+        })
+      });
+      const data = await res.json();
+      const text = data.content?.[0]?.text || '[]';
+      let scores = [];
+      try { scores = JSON.parse(text.replace(/```json|```/g,'')); } catch(e) {}
+      document.getElementById('scorecard-reading').style.display = 'none';
+      renderScorecardScores(players, scores, format);
+    } catch(e) {
+      document.getElementById('scorecard-reading').style.display = 'none';
+      toast('⚠️ Could not read scorecard: '+e.message);
+      renderScorecardScores(players, [], format);
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderScorecardScores(players, aiScores, format){
+  const el = document.getElementById('scorecard-scores');
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:8px">
+      ${aiScores.length ? '🤖 AI Read Scores — please verify and correct if needed:' : 'Enter scores manually:'}
+    </div>
+    ${players.map(p => {
+      const found = aiScores.find(s=>s.player&&s.player.toLowerCase().includes(p.name.toLowerCase().split(' ')[0].toLowerCase()));
+      const val = found?.score || '';
+      return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;background:white;border:1px solid var(--cream-dark);border-radius:8px;padding:8px 10px">
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:13px">${p.name}</div>
+          <div style="font-size:11px;color:var(--text-light)">${p.club}</div>
+        </div>
+        <input class="score-input" data-player="${p.name}" type="text" value="${val}" placeholder="${format==='stableford'?'e.g. 34 pts':format==='matchplay'?'e.g. 3&2':'e.g. 72'}" style="width:100px;padding:7px 10px;border:1px solid var(--cream-dark);border-radius:7px;font-size:13px;text-align:center;font-family:Inter,sans-serif"/>
+      </div>`;
+    }).join('')}
+    <div style="font-size:11px;color:var(--text-light);margin-top:4px;font-style:italic">Scores will be saved with this match and appear in the Stats tab</div>`;
+}
+
+// ── Form dots for leaderboard ──
+function getFormDots(clubName, matches){
+  const approved = matches.filter(m=>m.status==='approved');
+  const clubMatches = approved.filter(m=>m.g1a===clubName||m.g1b===clubName)
+    .sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,3);
+  if(!clubMatches.length) return '';
+  return '<div style="display:flex;gap:3px;margin-top:4px">' +
+    clubMatches.reverse().map(m=>{
+      const gp={};
+      [[m.g1a,m.g1b,m.g1r],[m.g2a,m.g2b,m.g2r]].forEach(([a,b,r])=>{
+        if(!a||!b||!r)return;
+        gp[a]=gp[a]||0;gp[b]=gp[b]||0;
+        if(r==='a'){gp[a]+=2;}else if(r==='b'){gp[b]+=2;}else{gp[a]++;gp[b]++;}
+      });
+      if(m.bonus&&gp[m.bonus]!==undefined)gp[m.bonus]++;
+      const pa=gp[clubName]||0;
+      const opp=[m.g1a,m.g1b].find(c=>c!==clubName);
+      const pb=gp[opp]||0;
+      if(pa>pb) return '<span class="form-dot fd-w">W</span>';
+      if(pb>pa) return '<span class="form-dot fd-l">L</span>';
+      return '<span class="form-dot fd-d">D</span>';
+    }).join('') + '</div>';
+}
+
+// ── Stats Tab ──
+let statsFilter = 'all';
+
+async function renderStats(){
+  const matches = await getMatches();
+  const approved = matches.filter(m=>m.status==='approved'&&m.playerScores&&Object.keys(m.playerScores).length>0);
+  const el = document.getElementById('stats-content');
+
+  if(!approved.length){
+    el.innerHTML=`<div class="empty"><div class="ei">📊</div>No player scores yet.<br>Upload a scorecard photo when submitting results.</div>`;
+    return;
+  }
+
+  // Build player stats
+  const playerData = {};
+  approved.forEach(m=>{
+    Object.entries(m.playerScores).forEach(([player, data])=>{
+      if(!data||!data.score) return;
+      if(!playerData[player]) playerData[player]={scores:[],club:pClub(player)||'—'};
+      playerData[player].scores.push({score:data.score,format:m.format||data.format,date:m.date,round:m.round});
+    });
+  });
+
+  // Format filter tabs
+  const formats=['all','stableford','matchplay','stroke'];
+  const fmtLabels={all:'All',stableford:'Stableford',matchplay:'Match Play',stroke:'Stroke'};
+  document.getElementById('stats-format-tabs').innerHTML = formats.map(f=>
+    `<button class="stats-tab-btn ${statsFilter===f?'on':''}" onclick="statsFilter='${f}';renderStats()">${fmtLabels[f]}</button>`
+  ).join('');
+
+  const sorted = Object.entries(playerData)
+    .filter(([,d])=>statsFilter==='all'||d.scores.some(s=>s.format===statsFilter))
+    .sort((a,b)=>a[0].localeCompare(b[0]));
+
+  if(!sorted.length){
+    el.innerHTML=`<div class="empty"><div class="ei">📊</div>No scores for this format yet.</div>`;
+    return;
+  }
+
+  el.innerHTML = sorted.map(([player, data])=>{
+    const scores = statsFilter==='all' ? data.scores : data.scores.filter(s=>s.format===statsFilter);
+    const numericScores = scores.map(s=>parseFloat(s.score)).filter(n=>!isNaN(n));
+    const best = numericScores.length ? Math.max(...numericScores) : null;
+    const worst = numericScores.length ? Math.min(...numericScores) : null;
+    const avg = numericScores.length ? (numericScores.reduce((a,b)=>a+b,0)/numericScores.length).toFixed(1) : null;
+    const initials = player.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    return `<div class="player-stat-card">
+      <div class="psc-header">
+        <div class="psc-avatar">${initials}</div>
+        <div>
+          <div class="psc-name">${player}</div>
+          <div class="psc-club">${data.club}</div>
+        </div>
+      </div>
+      ${numericScores.length ? `<div class="psc-stats">
+        <div class="psc-stat"><div class="psc-stat-val psc-best">${best}</div><div class="psc-stat-lbl">Best</div></div>
+        <div class="psc-stat"><div class="psc-stat-val">${avg}</div><div class="psc-stat-lbl">Avg</div></div>
+        <div class="psc-stat"><div class="psc-stat-val psc-worst">${worst}</div><div class="psc-stat-lbl">Worst</div></div>
+      </div>` : ''}
+      <div style="margin-top:10px;font-size:11px;color:var(--text-light)">
+        ${scores.slice(-5).reverse().map(s=>`<span style="display:inline-block;background:var(--cream);border-radius:6px;padding:3px 8px;margin:2px;font-weight:600;color:var(--text-dark)">${s.score} <span style="color:var(--text-light)">(${s.format||'?'})</span></span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Confetti ──
+function fireConfetti(){
+  const colors=['#C49A3C','#7B4FA6','#1B4332','#40916C','#E2BF6A','#A87CC9'];
+  for(let i=0;i<80;i++){
+    const el=document.createElement('div');
+    el.style.cssText=`position:fixed;top:-10px;left:${Math.random()*100}vw;width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.5?'50%':'2px'};z-index:9999;pointer-events:none;opacity:1`;
+    document.body.appendChild(el);
+    const duration=1500+Math.random()*1500;
+    const endX=parseFloat(el.style.left)+(Math.random()*200-100);
+    el.animate([
+      {transform:`translateY(0) rotate(0deg)`,opacity:1},
+      {transform:`translateY(100vh) translateX(${endX-parseFloat(el.style.left)}px) rotate(${720*Math.random()}deg)`,opacity:0}
+    ],{duration,easing:'cubic-bezier(.25,.46,.45,.94)'}).onfinish=()=>el.remove();
+  }
+}
+
 async function deleteResult(id){
   if(!confirm('Delete this approved result? This will affect the leaderboard.'))return;
   const matches=await getMatches();
@@ -730,6 +1374,7 @@ async function render(){
   const activeTab=document.querySelector('.panel.on')?.id;
   if(activeTab==='tab-res')await renderRes();
   if(activeTab==='tab-rum')await renderRum();
+  if(activeTab==='tab-stats')await renderStats();
 }
 
 // ── Firebase connection test ──
@@ -774,9 +1419,9 @@ async function testFirebase(){
 // Initial render — also pre-load other tabs
 (async()=>{
   await render();
-  // pre-warm
   await renderRes();
   await renderRum();
+  await renderStats();
 })();
 
 // Auto-refresh every 30s so everyone sees live updates
